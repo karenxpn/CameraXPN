@@ -235,24 +235,26 @@ public struct CameraXPN: View {
                             ZStack {
                                 Circle()
                                     .fill( camera.video ? recordVideoButtonColor : takeImageButtonColor)
-                                    .frame(width: 75, height: 75)
+                                    .frame(width: camera.video ? 95 : 75, height: camera.video ? 95 : 75)
                                 
                                 Circle()
                                     .stroke( camera.video ? recordVideoButtonColor : takeImageButtonColor, lineWidth: 2)
-                                    .frame(width: 85, height: 85)
+                                    .frame(width: camera.video ? 105 : 85, height: camera.video ? 105 : 85)
                             }
                             
                         }.simultaneousGesture(
                             LongPressGesture(minimumDuration: 0.5).onEnded({ value in
                                 if camera.recordPermission == .granted && videoAllowed{
-                                    camera.video = true
-                                    camera.setUp()
-                                    camera.startRecordinng()
+                                    withAnimation {
+                                        camera.video = true
+                                        camera.setUp()
+                                        camera.startRecordinng()
+                                    }
                                 }
                             })
-                        )
+                        ).buttonStyle(.plain)
                     }
-                }.frame(height: 75)
+                }.frame(height: camera.video ? 105 : 75)
                     .padding(.bottom)
                 
             }
