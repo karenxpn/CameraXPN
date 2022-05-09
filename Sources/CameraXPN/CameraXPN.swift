@@ -75,6 +75,8 @@ public struct CameraXPN: View {
     var useMediaButtonForeground: Color
     var useMediaButtonBackground: Color
     
+    var videoAllowed: Bool
+    
     public init(action: @escaping ((URL, Data) -> Void), font: Font,
                 permissionMessgae: String,
                 retakeButtonBackground: Color = .white,
@@ -95,7 +97,8 @@ public struct CameraXPN: View {
                 
                 useMediaContent: String = "Use This Media",
                 useMediaButtonForeground: Color = .black,
-                useMediaButtonBackground: Color = .white) {
+                useMediaButtonBackground: Color = .white,
+                videoAllowed: Bool = true) {
         
         self.action = action
         self.font = font
@@ -118,6 +121,8 @@ public struct CameraXPN: View {
         self.useMediaContent = useMediaContent
         self.useMediaButtonBackground = useMediaButtonBackground
         self.useMediaButtonForeground = useMediaButtonForeground
+        
+        self.videoAllowed = videoAllowed
     }
     
     public var body: some View {
@@ -239,7 +244,7 @@ public struct CameraXPN: View {
                             
                         }.simultaneousGesture(
                             LongPressGesture(minimumDuration: 0.5).onEnded({ value in
-                                if camera.recordPermission == .granted {
+                                if camera.recordPermission == .granted && videoAllowed{
                                     camera.video = true
                                     camera.setUp()
                                     camera.startRecordinng()
