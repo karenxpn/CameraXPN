@@ -29,7 +29,7 @@ class CameraViewModel: NSObject, ObservableObject, AVCapturePhotoCaptureDelegate
     @Published var isRecording: Bool = false
     @Published var previewURL: URL?
     
-    @Published var recordedDuration: Int = 0
+    @Published var recordedDuration: Double = 0
     
     @Published var recordPermission: AVAudioSession.RecordPermission = .undetermined
     
