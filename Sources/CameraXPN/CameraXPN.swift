@@ -9,7 +9,7 @@
 import SwiftUI
 
 /**
- Photo and video recording view.
+ SwiftUI Photo and Video recording view.
  
 # Permissions
 To avoid unexpected crashes be sure enabled camera and audio access in your info.plist
@@ -25,25 +25,6 @@ CameraXPN(action: { url, data in
     print(data.count)
 }, font: .subheadline, permissionMessgae: "Permission Denied")
 ```
- 
- 
-- Parameters: 
-    - action: action that returns url of our content with extension video.mov or photo.jpg
-    - font: font you need to present user media button
-    - permissionAlertMessage: a message that will be shown if video or audio access is denied
-    - retakeButtonBackground: retake button image color
-    - retakeButtonForeground: retakeButtonForeground description
-    - backButtonBackground: backButton  button image color
-    - backButtonForeground: backButtonForeground description
-    - closeButtonBackground: closeButton  button image color
-    - closeButtonForeground: closeButtonForeground description
-    - takeImageButtonColor: takeImage  button  color
-    - recordVideoButtonColor: recordVideo  button  color
-    - flipCameraBackground: flipCameraBackground description
-    - flipCameraForeground: flipCamera button image color
-    - useMediaContent: useMediaContent description
-    - useMediaButtonForeground: useMediButton text color
-    - useMediaButtonBackground: useMediaButtonBackground color
  
  */
 public struct CameraXPN: View {
@@ -76,7 +57,30 @@ public struct CameraXPN: View {
     var useMediaButtonBackground: Color
     
     var videoAllowed: Bool
+    let maxVideoDuration: Int
     
+    
+    /// Description
+    /// - Parameters:
+    ///   - action: action that returns url of our content with extension video.mov or photo.jpg
+    ///   - font: font you need to present user media button
+    ///   - permissionMessgae: a message that will be shown if video or audio access is denied
+    ///   - retakeButtonBackground: retakeButton background description
+    ///   - retakeButtonForeground: retake button image color
+    ///   - backButtonBackground: backButton background color
+    ///   - backButtonForeground: backButton  button image color
+    ///   - closeButtonBackground: close button background color
+    ///   - closeButtonForeground: close button image color
+    ///   - takeImageButtonColor: take image button color
+    ///   - recordVideoButtonColor: record video button color
+    ///   - flipCameraBackground: flip camera button background
+    ///   - flipCameraForeground: flip camera button image color
+    ///   - useMediaContent: use media text that can be replaced
+    ///   - useMediaButtonForeground: use media button text color
+    ///   - useMediaButtonBackground: use media button background color
+    ///   - videoAllowed: video can be allowed or not
+    ///   - maxVideoDuration: set maximum duration of the video you want to record
+    ///
     public init(action: @escaping ((URL, Data) -> Void), font: Font,
                 permissionMessgae: String,
                 retakeButtonBackground: Color = .white,
@@ -98,7 +102,8 @@ public struct CameraXPN: View {
                 useMediaContent: String = "Use This Media",
                 useMediaButtonForeground: Color = .black,
                 useMediaButtonBackground: Color = .white,
-                videoAllowed: Bool = true) {
+                videoAllowed: Bool = true,
+                maxVideoDuration: Int = 15) {
         
         self.action = action
         self.font = font
@@ -123,6 +128,7 @@ public struct CameraXPN: View {
         self.useMediaButtonForeground = useMediaButtonForeground
         
         self.videoAllowed = videoAllowed
+        self.maxVideoDuration = maxVideoDuration
     }
     
     public var body: some View {
@@ -268,12 +274,12 @@ public struct CameraXPN: View {
                 UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
             }),
                   secondaryButton: .cancel(Text(NSLocalizedString("cancel", comment: ""))))
-        }.onReceive(Timer.publish(every: 1, on: .main, in: .common).autoconnect()) { _ in
-            if camera.recordedDuration <= 15 && camera.isRecording {
-                camera.recordedDuration += 1
+        }.onReceive(Timer.publish(every: 0.01, on: .main, in: .common).autoconnect()) { _ in
+            if camera.recordedDuration <= maxVideoDuration && camera.isRecording {
+                camera.recordedDuration += 0.01
             }
             
-            if camera.recordedDuration >= 15 && camera.isRecording {
+            if camera.recordedDuration >= maxVideoDuration && camera.isRecording {
                 camera.stopRecording()
             }
         }
