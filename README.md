@@ -17,25 +17,6 @@ CameraXPN(action: { url, data in
 }, font: .subheadline, permissionMessgae: "Permission Denied")
 ```
 
-# CameraXPN
-
-SwiftUI Photo and Video recording view.
-
-# Permissions
-To avoid unexpected crashes be sure enabled camera and audio access in your info.plist
-
-# Funcionality
-Tap to take image and hold the button to start recording view.
-On the top left corner you can see flip camera icon which will toggle front-back cameras
-
-# Code
-```
-CameraXPN(action: { url, data in
-    print(url)
-    print(data.count)
-}, font: .subheadline, permissionMessgae: "Permission Denied")
-```
-
 - Parameters:
     - action: action that returns url of our content with extension video.mov or photo.jpg
     - font: font you need to present user media button
