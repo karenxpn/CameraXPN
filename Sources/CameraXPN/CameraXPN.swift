@@ -275,11 +275,11 @@ public struct CameraXPN: View {
             }),
                   secondaryButton: .cancel(Text(NSLocalizedString("cancel", comment: ""))))
         }.onReceive(Timer.publish(every: 0.01, on: .main, in: .common).autoconnect()) { _ in
-            if camera.recordedDuration <= maxVideoDuration && camera.isRecording {
+            if camera.recordedDuration <= Double(maxVideoDuration) && camera.isRecording {
                 camera.recordedDuration += 0.01
             }
             
-            if camera.recordedDuration >= maxVideoDuration && camera.isRecording {
+            if camera.recordedDuration >= Double(maxVideoDuration) && camera.isRecording {
                 camera.stopRecording()
             }
         }
