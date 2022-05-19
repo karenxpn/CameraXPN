@@ -19,6 +19,19 @@ https://github.com/karenxpn/CameraXPN
 ```
 
 # Code
+```swift
+import SwiftUI
+import CameraXPN
+
+struct ContentView: View {
+    var body: some View {
+        CameraXPN(action: { url, data in
+            print(url)
+            print(data.count)
+        }, font: .subheadline, permissionMessgae: "Permission Denied")
+    }
+}
+```
 <script src="https://gist.github.com/karenxpn/24f3508308cf5e7e35b3e277eac1cadf"></script>
 
 
