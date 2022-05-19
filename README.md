@@ -1,21 +1,26 @@
 # CameraXPN
-
 SwiftUI Photo and Video recording view.
 
+
 # Permissions
-To avoid unexpected crashes be sure enabled camera and audio access in your info.plist
+To avoid unexpected crashes be sure to enable the camera and audio access in your info.plist
+
 
 # Funcionality
-Tap to take image and hold the button to start recording view.
-On the top left corner you can see flip camera icon which will toggle front-back cameras
+Tap to take an image and hold the button to start recording view.
+You can see a flip camera icon on the top left corner that will toggle front-back cameras.
+All parameters are customizable, so feel free to get your preferred view.
+
+# Installation 
+### Swift Package Manager
+
+```swift
+https://github.com/karenxpn/CameraXPN
+```
 
 # Code
-```
-CameraXPN(action: { url, data in
-    print(url)
-    print(data.count)
-}, font: .subheadline, permissionMessgae: "Permission Denied")
-```
+<script src="https://gist.github.com/karenxpn/24f3508308cf5e7e35b3e277eac1cadf"></script>
+
 
 - Parameters:
     - action: action that returns url of our content with extension video.mov or photo.jpg
