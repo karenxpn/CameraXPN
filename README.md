@@ -11,6 +11,11 @@ Tap to take an image and hold the button to start recording view.
 You can see a flip camera icon on the top left corner that will toggle front-back cameras.
 All parameters are customizable, so feel free to get your preferred view.
 
+# Preview
+![Taking images](https://github.com/karenxpn/CameraXPN/blob/main/images/take_image.jpeg?raw=true)
+![Video recording](https://github.com/karenxpn/CameraXPN/blob/main/images/video_recording.jpeg?raw=true)
+![Preview capture](https://github.com/karenxpn/CameraXPN/blob/main/images/preview.jpeg?raw=true)
+
 # Installation 
 ### Swift Package Manager
 
@@ -32,7 +37,6 @@ struct ContentView: View {
     }
 }
 ```
-<script src="https://gist.github.com/karenxpn/24f3508308cf5e7e35b3e277eac1cadf"></script>
 
 
 - Parameters:
