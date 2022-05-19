@@ -12,9 +12,11 @@ You can see a flip camera icon on the top left corner that will toggle front-bac
 All parameters are customizable, so feel free to get your preferred view.
 
 # Preview
-![Taking images](https://github.com/karenxpn/CameraXPN/blob/main/images/take_image.jpeg?raw=true)
-![Video recording](https://github.com/karenxpn/CameraXPN/blob/main/images/video_recording.jpeg?raw=true)
-![Preview capture](https://github.com/karenxpn/CameraXPN/blob/main/images/preview.jpeg?raw=true)
+<p float="left">
+  <img src="https://github.com/karenxpn/CameraXPN/blob/main/images/take_image.jpeg?raw=true" width="32%" />
+  <img src="https://github.com/karenxpn/CameraXPN/blob/main/images/video_recording.jpeg?raw=true" width="32%" /> 
+  <img src="https://github.com/karenxpn/CameraXPN/blob/main/images/preview.jpeg?raw=true" width="32%" />
+</p>
 
 # Installation 
 ### Swift Package Manager
