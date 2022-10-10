@@ -260,7 +260,7 @@ public struct CameraXPN: View {
                             })
                         ).buttonStyle(.plain)
                     }
-                }.frame(height: camera.video ? 105 : 75)
+                }.frame(height: 105)
                     .padding(.bottom)
                 
             }

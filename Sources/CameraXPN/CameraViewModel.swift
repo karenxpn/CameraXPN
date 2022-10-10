@@ -59,9 +59,13 @@ class CameraViewModel: NSObject, ObservableObject, AVCapturePhotoCaptureDelegate
         case .undetermined:
             AVAudioSession.sharedInstance().requestRecordPermission { status in
                 if status {
-                    self.recordPermission = .granted
+                    DispatchQueue.main.async {
+                        self.recordPermission = .granted
+                    }
                 } else {
-                    self.recordPermission = .denied
+                    DispatchQueue.main.async {
+                        self.recordPermission = .denied
+                    }
                 }
             }
             
