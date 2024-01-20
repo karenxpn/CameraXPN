@@ -14,25 +14,28 @@ public struct CameraContentPreview: View {
     
     public var body: some View {
         
-        
-        ZStack {
-            if url != nil {
-                if checkURL() == "video" {
-                    let player = AVPlayer(url: url!)
-                    AVPlayerControllerRepresented(player: player)
-                        .onAppear {
-                            player.play()
-                        }.onDisappear {
-                            player.pause()
-                        }
-                } else {
-                    
-                    Image(uiImage: UIImage(contentsOfFile: url!.path)!)
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+        GeometryReader { proxy in
+
+            ZStack {
+                if url != nil {
+                    if checkURL() == "video" {
+                        let player = AVPlayer(url: url!)
+                        AVPlayerControllerRepresented(player: player)
+                            .onAppear {
+                                player.play()
+                            }.onDisappear {
+                                player.pause()
+                            }
+                    } else {
+                            Image(uiImage: UIImage(contentsOfFile: url!.path)!)
+                                .resizable()
+                                .scaledToFill()
+                    }
                 }
-            }
-        }.background(Color.black)
+            }.frame(width: proxy.size.width, height: proxy.size.height)
+            .background(Color.black)
+        }
+
     }
     
     func checkURL() -> String {
@@ -51,6 +54,10 @@ struct AVPlayerControllerRepresented : UIViewControllerRepresentable {
         let controller = AVPlayerViewController()
         controller.player = player
         controller.showsPlaybackControls = false
+        controller.videoGravity = AVLayerVideoGravity.resizeAspectFill
+
+        controller.edgesForExtendedLayout = []
+
         return controller
     }
     

@@ -141,7 +141,7 @@ public struct CameraXPN: View {
             
             if camera.isTaken {
                 CameraContentPreview(url: camera.previewURL)
-                    .ignoresSafeArea(.all, edges: .all)
+                    .ignoresSafeArea(.all, edges: .vertical)
             }
             
             
@@ -158,7 +158,7 @@ public struct CameraXPN: View {
                                 .padding()
                                 .background(backButtonBackground)
                                 .clipShape(Circle())
-                        }.padding(.leading)
+                        }
                         
                         Spacer()
                         
@@ -177,7 +177,7 @@ public struct CameraXPN: View {
                                 .padding()
                                 .background(closeButtonBackground)
                                 .clipShape(Circle())
-                        }.padding(.leading)
+                        }
                         
                         
                         Spacer()
@@ -197,7 +197,7 @@ public struct CameraXPN: View {
                                 .padding()
                                 .background(flipCameraBackground)
                                 .clipShape(Circle())
-                        }.padding(.trailing)
+                        }
                     }.padding(.top)
                 }
                 
@@ -223,7 +223,7 @@ public struct CameraXPN: View {
                                 .padding(.horizontal, 20)
                                 .background(Color.white)
                                 .clipShape(Capsule())
-                        }.padding(.trailing)
+                        }
                         
                     } else {
                         
@@ -263,7 +263,7 @@ public struct CameraXPN: View {
                 }.frame(height: 105)
                     .padding(.bottom)
                 
-            }
+            }.padding(.horizontal)
             
         }.onAppear {
             camera.checkPermission()

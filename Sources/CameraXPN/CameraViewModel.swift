@@ -105,6 +105,12 @@ class CameraViewModel: NSObject, ObservableObject, AVCapturePhotoCaptureDelegate
                     self.session.addOutput(self.videoOutput)
                 }
                 
+                if let connection = videoOutput.connection(with: .video) {
+                     // Fixing mirroring issue
+                     if connection.isVideoMirroringSupported {
+                         connection.isVideoMirrored = (position == .front)
+                     }
+                 }
                 
                 self.session.commitConfiguration()
                 
@@ -129,6 +135,13 @@ class CameraViewModel: NSObject, ObservableObject, AVCapturePhotoCaptureDelegate
                 
                 if self.session.canAddOutput(self.picOutput) {
                     self.session.addOutput(self.picOutput)
+                }
+                
+                if let connection = picOutput.connection(with: .video) {
+                    // Fixing mirroring issue
+                    if connection.isVideoMirroringSupported {
+                        connection.isVideoMirrored = (position == .front)
+                    }
                 }
                 
                 self.session.commitConfiguration()
@@ -183,8 +196,10 @@ class CameraViewModel: NSObject, ObservableObject, AVCapturePhotoCaptureDelegate
     }
     
     func startRecordinng() {
-        let tempFile = NSTemporaryDirectory() + "video.mov"
-        videoOutput.startRecording(to: URL(fileURLWithPath: tempFile), recordingDelegate: self)
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let fileUrl = paths[0].appendingPathComponent("video.mov")
+        try? FileManager.default.removeItem(at: fileUrl)
+        videoOutput.startRecording(to: fileUrl, recordingDelegate: self)
         isRecording = true
     }
     
@@ -192,7 +207,9 @@ class CameraViewModel: NSObject, ObservableObject, AVCapturePhotoCaptureDelegate
         videoOutput.stopRecording()
         isRecording = false
         
-        isTaken.toggle()
+        DispatchQueue.main.async {
+            self.isTaken.toggle()
+        }
         session.stopRunning()
     }
     
@@ -203,7 +220,9 @@ class CameraViewModel: NSObject, ObservableObject, AVCapturePhotoCaptureDelegate
         
         guard let imageData = photo.fileDataRepresentation() else { return }
         self.mediaData = imageData
-        self.isTaken = true
+        DispatchQueue.main.async {
+            self.isTaken = true
+        }
         savePhoto()
     }
     
@@ -216,7 +235,9 @@ class CameraViewModel: NSObject, ObservableObject, AVCapturePhotoCaptureDelegate
         }
         
         previewURL = outputFileURL
-        self.isTaken = true
+        DispatchQueue.main.async {
+            self.isTaken = true
+        }
         
         do {
             try self.mediaData = Data(contentsOf: outputFileURL)
