@@ -33,8 +33,8 @@ public struct CameraXPN: View {
     
     let action: ((URL, Data) -> Void)
     let font: Font
-    let permissionAlertMessage: String
-    
+    let permissionAlertMessage: LocalizedStringKey
+
     
     var retakeButtonBackground: Color
     var retakeButtonForeground: Color
@@ -64,7 +64,7 @@ public struct CameraXPN: View {
     /// - Parameters:
     ///   - action: action that returns url of our content with extension video.mov or photo.jpg
     ///   - font: font you need to present user media button
-    ///   - permissionMessgae: a message that will be shown if video or audio access is denied
+    ///   - permissionMessage: a message that will be shown if video or audio access is denied
     ///   - retakeButtonBackground: retakeButton background description
     ///   - retakeButtonForeground: retake button image color
     ///   - backButtonBackground: backButton background color
@@ -82,7 +82,7 @@ public struct CameraXPN: View {
     ///   - maxVideoDuration: set maximum duration of the video you want to record
     ///
     public init(action: @escaping ((URL, Data) -> Void), font: Font,
-                permissionMessgae: String,
+                permissionMessage: LocalizedStringKey,
                 retakeButtonBackground: Color = .white,
                 retakeButtonForeground: Color = .black,
                 
@@ -107,7 +107,7 @@ public struct CameraXPN: View {
         
         self.action = action
         self.font = font
-        self.permissionAlertMessage = permissionMessgae
+        self.permissionAlertMessage = permissionMessage
         self.retakeButtonBackground = retakeButtonBackground
         self.retakeButtonForeground = retakeButtonForeground
         
@@ -269,7 +269,7 @@ public struct CameraXPN: View {
             camera.checkPermission()
             camera.checkAudioPermission()
         }.alert(isPresented: $camera.alert) {
-            Alert(title: Text(NSLocalizedString("youFoundInterlocutor", comment: "")),
+            Alert(title: Text(permissionAlertMessage),
                   primaryButton: .default(Text(NSLocalizedString("goToSettings", comment: "")), action: {
                 UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
             }),
