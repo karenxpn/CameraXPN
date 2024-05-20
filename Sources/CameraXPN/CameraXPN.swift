@@ -267,7 +267,9 @@ public struct CameraXPN: View {
             
         }.onAppear {
             camera.checkPermission()
-            camera.checkAudioPermission()
+            if videoAllowed {
+                camera.checkAudioPermission()
+            }
         }.alert(isPresented: $camera.alert) {
             Alert(title: Text(NSLocalizedString("youFoundInterlocutor", comment: "")),
                   primaryButton: .default(Text(NSLocalizedString("goToSettings", comment: "")), action: {
