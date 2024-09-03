@@ -18,6 +18,11 @@ public struct CameraPreview: UIViewRepresentable {
         camera.preview = AVCaptureVideoPreviewLayer(session: camera.session)
         camera.preview.frame = view.frame
         
+        if let conn = camera.preview?.connection, conn.isVideoOrientationSupported {
+            conn.videoOrientation = UIApplication.shared.interfaceOrientation.videoOrientation
+        }
+
+        
         camera.preview.videoGravity = .resizeAspectFill
         view.layer.addSublayer(camera.preview)
         
@@ -28,7 +33,33 @@ public struct CameraPreview: UIViewRepresentable {
         return view
     }
     
-    public func updateUIView(_ uiView: UIView, context: Context) {
-        
+    public func updateUIView(_ uiView: UIView, context: Context) { }
+}
+
+
+fileprivate extension UIInterfaceOrientation {
+    var videoOrientation: AVCaptureVideoOrientation {
+        switch self {
+            case .portraitUpsideDown: return .portraitUpsideDown
+            case .landscapeRight: return .landscapeRight
+            case .landscapeLeft: return .landscapeLeft
+            case .portrait: return .portrait
+            default: return .portrait
+        }
+    }
+}
+
+fileprivate extension UIApplication {
+    var keyWindow: UIWindow? {
+        connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .flatMap { $0.windows }
+            .first { $0.isKeyWindow }
+    }
+
+    var interfaceOrientation: UIInterfaceOrientation {
+        keyWindow?
+            .windowScene?
+            .interfaceOrientation ?? .portrait
     }
 }
